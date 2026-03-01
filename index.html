@@ -13,9 +13,10 @@
             --text-primary: #1a1d24;
             --text-secondary: #6b7280;
             --text-muted: #9ca3af;
-            --midas-green: #1db954;
-            --midas-green-light: rgba(29, 185, 84, 0.10);
-            --midas-green-medium: rgba(29, 185, 84, 0.18);
+            --midas-blue: #5B5FE6;
+            --midas-blue-light: rgba(91, 95, 230, 0.10);
+            --midas-blue-medium: rgba(91, 95, 230, 0.18);
+            --positive: #22c55e;
             --accent-red: #ef4444;
             --accent-red-light: rgba(239, 68, 68, 0.10);
             --accent-orange: #f59e0b;
@@ -34,635 +35,267 @@
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Roboto, sans-serif;
-            background: #e5e7eb;
-            color: var(--text-primary);
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+            background: #e5e7eb; color: var(--text-primary);
+            min-height: 100vh; display: flex; flex-direction: column; align-items: center;
         }
 
-        /* ── Prototype Nav ── */
         .prototype-nav {
             position: fixed; top: 0; left: 0; right: 0;
-            background: rgba(255,255,255,0.92);
-            backdrop-filter: blur(16px);
-            border-bottom: 1px solid var(--border-color);
-            z-index: 100; padding: 10px 0;
+            background: rgba(255,255,255,0.92); backdrop-filter: blur(16px);
+            border-bottom: 1px solid var(--border-color); z-index: 100; padding: 10px 0;
         }
         .prototype-nav-inner {
             max-width: 900px; margin: 0 auto;
-            display: flex; align-items: center; gap: 8px;
-            padding: 0 16px; overflow-x: auto;
+            display: flex; align-items: center; gap: 8px; padding: 0 16px; overflow-x: auto;
         }
         .prototype-nav-inner::-webkit-scrollbar { display: none; }
         .nav-tab {
             padding: 7px 16px; border-radius: 20px; font-size: 13px; font-weight: 500;
-            cursor: pointer; white-space: nowrap;
-            border: 1px solid var(--border-color);
-            background: transparent; color: var(--text-secondary);
-            transition: all 0.2s;
+            cursor: pointer; white-space: nowrap; border: 1px solid var(--border-color);
+            background: transparent; color: var(--text-secondary); transition: all 0.2s;
         }
         .nav-tab:hover { background: var(--bg-card); color: var(--text-primary); }
-        .nav-tab.active {
-            background: var(--midas-green); color: #fff;
-            border-color: var(--midas-green); font-weight: 600;
+        .nav-tab.active { background: var(--midas-blue); color: #fff; border-color: var(--midas-blue); font-weight: 600; }
+        .lang-toggle {
+            margin-left: auto; padding: 5px 12px; border-radius: 16px; font-size: 12px; font-weight: 600;
+            cursor: pointer; border: 1px solid var(--midas-blue); color: var(--midas-blue); background: var(--midas-blue-light);
+            white-space: nowrap; transition: all 0.2s;
         }
+        .lang-toggle:hover { background: var(--midas-blue); color: #fff; }
 
-        /* ── Screens ── */
         .screen { display: none; width: 100%; max-width: 390px; min-height: 100vh; padding: 60px 0 30px; }
         .screen.active { display: block; }
-        .phone-frame { background: var(--bg-primary); border-radius: 0; overflow: hidden; }
+        .phone-frame { background: var(--bg-primary); }
 
-        /* ── Status Bar ── */
-        .status-bar {
-            display: flex; justify-content: space-between; align-items: center;
-            padding: 8px 20px; font-size: 12px; font-weight: 600; color: var(--text-primary);
-        }
+        .status-bar { display: flex; justify-content: space-between; align-items: center; padding: 8px 20px; font-size: 12px; font-weight: 600; }
         .status-bar-right { display: flex; gap: 6px; align-items: center; }
-
-        /* ── App Header ── */
-        .app-header {
-            display: flex; justify-content: space-between; align-items: center;
-            padding: 4px 20px 14px;
-        }
-        .app-logo { font-size: 24px; font-weight: 800; color: var(--midas-green); letter-spacing: -0.5px; }
+        .app-header { display: flex; justify-content: space-between; align-items: center; padding: 4px 20px 14px; }
+        .app-logo { font-size: 24px; font-weight: 800; color: var(--midas-blue); letter-spacing: -0.5px; }
         .header-icons { display: flex; gap: 16px; }
         .header-icon { width: 24px; height: 24px; color: var(--text-secondary); }
 
-        /* ── Portfolio Summary ── */
         .portfolio-summary { padding: 0 20px 18px; }
         .portfolio-label { font-size: 13px; color: var(--text-secondary); margin-bottom: 2px; }
-        .portfolio-value { font-size: 28px; font-weight: 700; letter-spacing: -0.5px; color: var(--text-primary); }
-        .portfolio-change {
-            display: inline-flex; align-items: center; gap: 4px;
-            font-size: 14px; font-weight: 500; color: var(--midas-green); margin-top: 3px;
-        }
+        .portfolio-value { font-size: 28px; font-weight: 700; letter-spacing: -0.5px; }
+        .portfolio-change { display: inline-flex; align-items: center; gap: 4px; font-size: 14px; font-weight: 500; color: var(--positive); margin-top: 3px; }
 
-        /* ── Fear & Greed Widget ── */
         .fg-widget {
-            margin: 0 20px 18px;
-            background: var(--bg-primary);
-            border-radius: 16px; padding: 18px;
-            cursor: pointer; transition: all 0.2s;
-            border: 1px solid var(--border-color);
-            box-shadow: var(--shadow-sm);
+            margin: 0 20px 18px; background: var(--bg-primary); border-radius: 16px; padding: 18px;
+            cursor: pointer; transition: all 0.2s; border: 1px solid var(--border-color); box-shadow: var(--shadow-sm);
         }
-        .fg-widget:hover { box-shadow: var(--shadow-md); border-color: rgba(29,185,84,0.3); }
-        .fg-widget-header {
-            display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px;
-        }
-        .fg-widget-title { font-size: 14px; font-weight: 600; color: var(--text-primary); }
-        .fg-widget-badge {
-            font-size: 11px; font-weight: 600; padding: 3px 10px;
-            border-radius: 6px; text-transform: uppercase; letter-spacing: 0.4px;
-        }
+        .fg-widget:hover { box-shadow: var(--shadow-md); border-color: rgba(91,95,230,0.3); }
+        .fg-widget-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; }
+        .fg-widget-title { font-size: 14px; font-weight: 600; }
+        .fg-widget-badge { font-size: 11px; font-weight: 600; padding: 3px 10px; border-radius: 6px; text-transform: uppercase; letter-spacing: 0.4px; }
         .fg-widget-badge.fear { background: var(--accent-red-light); color: var(--accent-red); }
-        .fg-widget-badge.greed { background: var(--midas-green-light); color: var(--midas-green); }
-
         .fg-gauge-container { display: flex; flex-direction: column; align-items: center; padding: 8px 0; }
         .fg-gauge-svg { width: 200px; height: 120px; }
         .fg-gauge-value { font-size: 44px; font-weight: 700; margin-top: -10px; }
         .fg-gauge-label { font-size: 16px; font-weight: 600; margin-top: 2px; }
         .fg-gauge-sublabel { font-size: 12px; color: var(--text-muted); margin-top: 4px; }
-
-        .fg-widget-footer {
-            display: flex; justify-content: space-between; align-items: center;
-            margin-top: 14px; padding-top: 12px; border-top: 1px solid var(--border-color);
-        }
+        .fg-widget-footer { display: flex; justify-content: space-between; align-items: center; margin-top: 14px; padding-top: 12px; border-top: 1px solid var(--border-color); }
         .fg-footer-item { text-align: center; }
         .fg-footer-item-label { font-size: 11px; color: var(--text-muted); margin-bottom: 2px; }
         .fg-footer-item-value { font-size: 14px; font-weight: 600; }
-        .fg-tap-hint {
-            display: flex; align-items: center; justify-content: center; gap: 4px;
-            font-size: 12px; color: var(--text-muted); margin-top: 10px;
-        }
+        .fg-tap-hint { display: flex; align-items: center; justify-content: center; gap: 4px; font-size: 12px; color: var(--text-muted); margin-top: 10px; }
 
-        /* ── Sections ── */
-        .section-header {
-            display: flex; justify-content: space-between; align-items: center;
-            padding: 14px 20px 10px;
-        }
-        .section-title { font-size: 16px; font-weight: 600; color: var(--text-primary); }
-        .section-link { font-size: 13px; color: var(--midas-green); font-weight: 500; }
+        .section-header { display: flex; justify-content: space-between; align-items: center; padding: 14px 20px 10px; }
+        .section-title { font-size: 16px; font-weight: 600; }
+        .section-link { font-size: 13px; color: var(--midas-blue); font-weight: 500; }
 
-        /* ── Watchlist ── */
-        .watchlist-item {
-            display: flex; align-items: center; padding: 11px 20px; gap: 12px;
-        }
-        .stock-icon {
-            width: 40px; height: 40px; border-radius: 12px;
-            background: var(--bg-card);
-            display: flex; align-items: center; justify-content: center;
-            font-size: 11px; font-weight: 700; color: var(--text-primary);
-            border: 1px solid var(--border-color);
-        }
+        .watchlist-item { display: flex; align-items: center; padding: 11px 20px; gap: 12px; }
+        .stock-icon { width: 40px; height: 40px; border-radius: 12px; background: var(--bg-card); display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; border: 1px solid var(--border-color); }
         .stock-info { flex: 1; }
-        .stock-name { font-size: 14px; font-weight: 600; color: var(--text-primary); }
+        .stock-name { font-size: 14px; font-weight: 600; }
         .stock-ticker { font-size: 12px; color: var(--text-secondary); }
         .stock-price-info { text-align: right; }
-        .stock-price { font-size: 14px; font-weight: 600; color: var(--text-primary); }
+        .stock-price { font-size: 14px; font-weight: 600; }
         .stock-change { font-size: 12px; font-weight: 500; }
-        .stock-change.positive { color: var(--midas-green); }
+        .stock-change.positive { color: var(--positive); }
         .stock-change.negative { color: var(--accent-red); }
 
-        /* ── Bottom Nav ── */
-        .bottom-nav {
-            position: fixed; bottom: 0; left: 50%; transform: translateX(-50%);
-            width: 100%; max-width: 390px;
-            background: rgba(255,255,255,0.95); backdrop-filter: blur(16px);
-            border-top: 1px solid var(--border-color);
-            display: flex; justify-content: space-around;
-            padding: 8px 0 20px; z-index: 50;
-        }
-        .bottom-nav-item {
-            display: flex; flex-direction: column; align-items: center; gap: 3px;
-            font-size: 10px; color: var(--text-muted); cursor: pointer;
-        }
-        .bottom-nav-item.active { color: var(--midas-green); }
+        .bottom-nav { position: fixed; bottom: 0; left: 50%; transform: translateX(-50%); width: 100%; max-width: 390px; background: rgba(255,255,255,0.95); backdrop-filter: blur(16px); border-top: 1px solid var(--border-color); display: flex; justify-content: space-around; padding: 8px 0 20px; z-index: 50; }
+        .bottom-nav-item { display: flex; flex-direction: column; align-items: center; gap: 3px; font-size: 10px; color: var(--text-muted); cursor: pointer; }
+        .bottom-nav-item.active { color: var(--midas-blue); }
         .bottom-nav-icon { width: 22px; height: 22px; }
 
-        /* ── Detail Header ── */
-        .detail-header {
-            display: flex; align-items: center; padding: 10px 20px; gap: 12px;
-        }
-        .back-btn {
-            width: 34px; height: 34px; border-radius: 10px;
-            background: var(--bg-card); display: flex; align-items: center; justify-content: center;
-            cursor: pointer; border: 1px solid var(--border-color); color: var(--text-primary);
-        }
-        .detail-title { font-size: 18px; font-weight: 600; color: var(--text-primary); }
+        .detail-header { display: flex; align-items: center; padding: 10px 20px; gap: 12px; }
+        .back-btn { width: 34px; height: 34px; border-radius: 10px; background: var(--bg-card); display: flex; align-items: center; justify-content: center; cursor: pointer; border: 1px solid var(--border-color); color: var(--text-primary); }
+        .detail-title { font-size: 18px; font-weight: 600; }
 
-        /* ── Detail Gauge ── */
         .detail-gauge-section { padding: 16px 20px; text-align: center; }
         .detail-gauge-svg { width: 260px; height: 150px; }
         .detail-gauge-value { font-size: 56px; font-weight: 700; margin-top: -8px; }
         .detail-gauge-label { font-size: 20px; font-weight: 600; margin-top: 2px; }
         .detail-gauge-date { font-size: 13px; color: var(--text-muted); margin-top: 6px; }
 
-        /* ── AI Summary ── */
-        .ai-summary {
-            margin: 0 20px 16px;
-            background: var(--midas-green-light);
-            border: 1px solid rgba(29,185,84,0.2);
-            border-radius: 14px; padding: 16px;
-        }
+        .ai-summary { margin: 0 20px 16px; background: var(--midas-blue-light); border: 1px solid rgba(91,95,230,0.2); border-radius: 14px; padding: 16px; }
         .ai-summary-header { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
-        .ai-badge {
-            font-size: 10px; font-weight: 700;
-            background: var(--midas-green); color: #fff;
-            padding: 2px 7px; border-radius: 4px; letter-spacing: 0.5px;
-        }
-        .ai-summary-label { font-size: 12px; color: var(--midas-green); font-weight: 600; }
+        .ai-badge { font-size: 10px; font-weight: 700; background: var(--midas-blue); color: #fff; padding: 2px 7px; border-radius: 4px; letter-spacing: 0.5px; }
+        .ai-summary-label { font-size: 12px; color: var(--midas-blue); font-weight: 600; }
         .ai-summary-text { font-size: 13px; line-height: 1.65; color: var(--text-secondary); }
 
-        /* ── Portfolio Comparison ── */
-        .portfolio-compare {
-            margin: 0 20px 16px;
-            background: var(--bg-primary);
-            border-radius: 14px; padding: 16px;
-            border: 1px solid var(--border-color); box-shadow: var(--shadow-sm);
-        }
+        .portfolio-compare { margin: 0 20px 16px; background: var(--bg-primary); border-radius: 14px; padding: 16px; border: 1px solid var(--border-color); box-shadow: var(--shadow-sm); }
         .compare-header { font-size: 14px; font-weight: 600; margin-bottom: 12px; }
         .compare-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
         .compare-label { font-size: 13px; color: var(--text-secondary); }
         .compare-bar-container { flex: 1; margin: 0 12px; position: relative; }
-        .compare-bar-bg {
-            height: 8px;
-            background: linear-gradient(90deg, var(--fear-extreme), var(--fear), var(--neutral), var(--greed), var(--greed-extreme));
-            border-radius: 4px; opacity: 0.25;
-        }
-        .compare-bar-marker {
-            position: absolute; top: -3px; width: 14px; height: 14px;
-            border-radius: 50%; border: 2.5px solid #fff;
-            transform: translateX(-50%); box-shadow: 0 1px 4px rgba(0,0,0,0.2);
-        }
+        .compare-bar-bg { height: 8px; background: linear-gradient(90deg, var(--fear-extreme), var(--fear), var(--neutral), var(--greed), var(--greed-extreme)); border-radius: 4px; opacity: 0.25; }
+        .compare-bar-marker { position: absolute; top: -3px; width: 14px; height: 14px; border-radius: 50%; border: 2.5px solid #fff; transform: translateX(-50%); box-shadow: 0 1px 4px rgba(0,0,0,0.2); }
         .compare-value { font-size: 14px; font-weight: 600; min-width: 30px; text-align: right; }
 
-        /* ── Indicators ── */
         .indicators-section { padding: 0 20px 100px; }
-        .indicators-title { font-size: 16px; font-weight: 600; margin-bottom: 14px; color: var(--text-primary); }
-        .indicator-card {
-            background: var(--bg-primary);
-            border-radius: 12px; padding: 14px; margin-bottom: 10px;
-            border: 1px solid var(--border-color); box-shadow: var(--shadow-sm);
-        }
+        .indicators-title { font-size: 16px; font-weight: 600; margin-bottom: 14px; }
+        .indicator-card { background: var(--bg-primary); border-radius: 12px; padding: 14px; margin-bottom: 10px; border: 1px solid var(--border-color); box-shadow: var(--shadow-sm); }
         .indicator-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
-        .indicator-name { font-size: 13px; font-weight: 600; color: var(--text-primary); }
+        .indicator-name { font-size: 13px; font-weight: 600; }
         .indicator-score { font-size: 14px; font-weight: 700; }
         .indicator-bar-bg { height: 6px; background: var(--bg-card); border-radius: 3px; overflow: hidden; }
         .indicator-bar-fill { height: 100%; border-radius: 3px; transition: width 1s ease; }
         .indicator-sublabel { font-size: 11px; color: var(--text-muted); margin-top: 6px; }
 
-        /* ── Chart Screen ── */
         .timeframe-tabs { display: flex; gap: 6px; padding: 0 20px; margin-bottom: 16px; }
-        .tf-tab {
-            padding: 6px 14px; border-radius: 8px; font-size: 13px; font-weight: 500;
-            background: var(--bg-card); color: var(--text-secondary);
-            cursor: pointer; border: 1px solid var(--border-color); transition: all 0.2s;
-        }
-        .tf-tab.active {
-            background: var(--midas-green); color: #fff;
-            border-color: var(--midas-green); font-weight: 600;
-        }
-        .chart-container {
-            margin: 0 20px; background: var(--bg-primary);
-            border-radius: 16px; padding: 16px;
-            border: 1px solid var(--border-color); box-shadow: var(--shadow-sm);
-            height: 270px; position: relative;
-        }
+        .tf-tab { padding: 6px 14px; border-radius: 8px; font-size: 13px; font-weight: 500; background: var(--bg-card); color: var(--text-secondary); cursor: pointer; border: 1px solid var(--border-color); transition: all 0.2s; }
+        .tf-tab.active { background: var(--midas-blue); color: #fff; border-color: var(--midas-blue); font-weight: 600; }
+        .chart-container { margin: 0 20px; background: var(--bg-primary); border-radius: 16px; padding: 16px; border: 1px solid var(--border-color); box-shadow: var(--shadow-sm); height: 270px; position: relative; }
         .chart-canvas { width: 100%; height: 100%; }
         .chart-stats { display: grid; grid-template-columns: repeat(3,1fr); gap: 10px; padding: 16px 20px; }
-        .chart-stat {
-            background: var(--bg-primary); border-radius: 12px; padding: 14px; text-align: center;
-            border: 1px solid var(--border-color); box-shadow: var(--shadow-sm);
-        }
+        .chart-stat { background: var(--bg-primary); border-radius: 12px; padding: 14px; text-align: center; border: 1px solid var(--border-color); box-shadow: var(--shadow-sm); }
         .chart-stat-label { font-size: 11px; color: var(--text-muted); margin-bottom: 3px; }
         .chart-stat-value { font-size: 18px; font-weight: 700; }
         .chart-stat-sublabel { font-size: 10px; color: var(--text-muted); margin-top: 2px; }
 
-        /* ── Stock Detail ── */
         .stock-detail-header { padding: 12px 20px; display: flex; align-items: center; gap: 12px; }
-        .stock-detail-icon {
-            width: 48px; height: 48px; border-radius: 14px;
-            background: var(--bg-card); display: flex; align-items: center; justify-content: center;
-            font-size: 14px; font-weight: 700; border: 1px solid var(--border-color); color: var(--text-primary);
-        }
-        .stock-detail-name { font-size: 20px; font-weight: 700; color: var(--text-primary); }
+        .stock-detail-icon { width: 48px; height: 48px; border-radius: 14px; background: var(--bg-card); display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 700; border: 1px solid var(--border-color); }
+        .stock-detail-name { font-size: 20px; font-weight: 700; }
         .stock-detail-ticker-row { font-size: 13px; color: var(--text-secondary); }
         .stock-detail-price-section { padding: 0 20px 14px; }
-        .stock-detail-price { font-size: 32px; font-weight: 700; color: var(--text-primary); }
+        .stock-detail-price { font-size: 32px; font-weight: 700; }
         .stock-detail-change { font-size: 14px; font-weight: 500; margin-top: 3px; }
+        .stock-chart-placeholder { margin: 0 20px; height: 150px; background: var(--bg-primary); border-radius: 12px; border: 1px solid var(--border-color); position: relative; overflow: hidden; box-shadow: var(--shadow-sm); }
 
-        .stock-chart-placeholder {
-            margin: 0 20px; height: 150px;
-            background: var(--bg-primary); border-radius: 12px;
-            border: 1px solid var(--border-color); position: relative; overflow: hidden;
-            box-shadow: var(--shadow-sm);
-        }
-
-        /* ── Sentiment Banner ── */
-        .sentiment-banner {
-            margin: 14px 20px;
-            background: var(--accent-red-light);
-            border: 1px solid rgba(239,68,68,0.2);
-            border-radius: 14px; padding: 14px 16px;
-            display: flex; align-items: center; gap: 14px;
-            cursor: pointer; transition: all 0.2s;
-        }
+        .sentiment-banner { margin: 14px 20px; background: var(--accent-red-light); border: 1px solid rgba(239,68,68,0.2); border-radius: 14px; padding: 14px 16px; display: flex; align-items: center; gap: 14px; cursor: pointer; transition: all 0.2s; }
         .sentiment-banner:hover { box-shadow: var(--shadow-md); }
-        .sentiment-mini-gauge {
-            width: 44px; height: 44px; border-radius: 50%;
-            display: flex; align-items: center; justify-content: center;
-            font-size: 16px; font-weight: 700; flex-shrink: 0;
-        }
+        .sentiment-mini-gauge { width: 44px; height: 44px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 700; flex-shrink: 0; }
         .sentiment-banner-text { flex: 1; }
         .sentiment-banner-title { font-size: 13px; font-weight: 600; margin-bottom: 2px; }
         .sentiment-banner-desc { font-size: 12px; color: var(--text-secondary); line-height: 1.45; }
         .sentiment-banner-arrow { color: var(--text-muted); font-size: 18px; }
 
-        /* ── AI Insight Card ── */
-        .ai-insight-card {
-            margin: 0 20px 14px;
-            background: var(--bg-primary); border-radius: 14px; padding: 16px;
-            border: 1px solid var(--border-color); box-shadow: var(--shadow-sm);
-        }
+        .ai-insight-card { margin: 0 20px 14px; background: var(--bg-primary); border-radius: 14px; padding: 16px; border: 1px solid var(--border-color); box-shadow: var(--shadow-sm); }
         .ai-insight-header { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; }
-        .ai-insight-title { font-size: 13px; font-weight: 600; color: var(--text-primary); }
+        .ai-insight-title { font-size: 13px; font-weight: 600; }
         .ai-insight-text { font-size: 13px; line-height: 1.65; color: var(--text-secondary); }
-        .ai-consensus-label {
-            display: inline-block; margin-top: 10px; padding: 5px 12px;
-            border-radius: 8px; font-size: 12px; font-weight: 600;
-        }
-        .ai-feedback-row {
-            display: flex; align-items: center; gap: 12px;
-            margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--border-color);
-        }
+        .ai-consensus-label { display: inline-block; margin-top: 10px; padding: 5px 12px; border-radius: 8px; font-size: 12px; font-weight: 600; }
+        .ai-feedback-row { display: flex; align-items: center; gap: 12px; margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--border-color); }
         .ai-feedback-label { font-size: 11px; color: var(--text-muted); }
-        .ai-feedback-btn {
-            width: 30px; height: 30px; border-radius: 8px;
-            background: var(--bg-card); border: 1px solid var(--border-color);
-            display: flex; align-items: center; justify-content: center;
-            cursor: pointer; font-size: 14px; transition: all 0.2s;
-        }
-        .ai-feedback-btn:hover { border-color: var(--midas-green); background: var(--midas-green-light); }
+        .ai-feedback-btn { width: 30px; height: 30px; border-radius: 8px; background: var(--bg-card); border: 1px solid var(--border-color); display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 14px; transition: all 0.2s; }
+        .ai-feedback-btn:hover { border-color: var(--midas-blue); background: var(--midas-blue-light); }
 
-        /* ── Action Buttons ── */
         .stock-action-buttons { display: flex; gap: 12px; padding: 14px 20px 100px; }
-        .action-btn {
-            flex: 1; padding: 14px; border-radius: 12px;
-            font-size: 15px; font-weight: 600; text-align: center;
-            cursor: pointer; border: none;
-        }
-        .action-btn.buy { background: var(--midas-green); color: #fff; }
-        .action-btn.sell {
-            background: var(--bg-primary); color: var(--text-primary);
-            border: 1px solid var(--border-color);
-        }
+        .action-btn { flex: 1; padding: 14px; border-radius: 12px; font-size: 15px; font-weight: 600; text-align: center; cursor: pointer; border: none; }
+        .action-btn.buy { background: var(--midas-blue); color: #fff; }
+        .action-btn.sell { background: var(--bg-primary); color: var(--text-primary); border: 1px solid var(--border-color); }
 
-        /* ── Disclaimer ── */
-        .disclaimer {
-            margin: 0 20px 18px; padding: 12px;
-            background: var(--bg-card); border-radius: 10px;
-            font-size: 11px; color: var(--text-muted); line-height: 1.55;
-        }
-        .disclaimer-icon { margin-right: 4px; }
-
-        /* ── Prototype label ── */
-        .prototype-label {
-            position: fixed; bottom: 76px; left: 50%; transform: translateX(-50%);
-            background: var(--midas-green-light); color: var(--midas-green);
-            padding: 5px 14px; border-radius: 16px;
-            font-size: 11px; font-weight: 600; letter-spacing: 0.5px; z-index: 100;
-            border: 1px solid rgba(29,185,84,0.25);
-        }
+        .disclaimer { margin: 0 20px 18px; padding: 12px; background: var(--bg-card); border-radius: 10px; font-size: 11px; color: var(--text-muted); line-height: 1.55; }
+        .prototype-label { position: fixed; bottom: 76px; left: 50%; transform: translateX(-50%); background: var(--midas-blue-light); color: var(--midas-blue); padding: 5px 14px; border-radius: 16px; font-size: 11px; font-weight: 600; letter-spacing: 0.5px; z-index: 100; border: 1px solid rgba(91,95,230,0.25); }
     </style>
 </head>
 <body>
 
-    <!-- Prototype Navigation -->
     <nav class="prototype-nav">
         <div class="prototype-nav-inner">
-            <div class="nav-tab active" onclick="showScreen('home')">Home Screen</div>
-            <div class="nav-tab" onclick="showScreen('detail')">Detail View</div>
-            <div class="nav-tab" onclick="showScreen('history')">Historical Chart</div>
-            <div class="nav-tab" onclick="showScreen('stock')">Stock Page</div>
+            <div class="nav-tab active" onclick="showScreen('home')" data-en="Home Screen" data-tr="Ana Ekran">Home Screen</div>
+            <div class="nav-tab" onclick="showScreen('detail')" data-en="Detail View" data-tr="Detay">Detail View</div>
+            <div class="nav-tab" onclick="showScreen('history')" data-en="Historical Chart" data-tr="Tarihsel Grafik">Historical Chart</div>
+            <div class="nav-tab" onclick="showScreen('stock')" data-en="Stock Page" data-tr="Hisse Sayfasi">Stock Page</div>
+            <div class="lang-toggle" onclick="toggleLang()">TR</div>
         </div>
     </nav>
 
     <!-- ========== SCREEN 1: HOME ========== -->
     <div class="screen active" id="screen-home">
         <div class="phone-frame">
-            <div class="status-bar">
-                <span>09:41</span>
-                <div class="status-bar-right">
-                    <svg width="16" height="12" viewBox="0 0 16 12" fill="currentColor"><rect x="0" y="6" width="3" height="6" rx="1"/><rect x="5" y="4" width="3" height="8" rx="1"/><rect x="10" y="1" width="3" height="11" rx="1"/></svg>
-                    <svg width="18" height="12" viewBox="0 0 18 12" fill="currentColor"><rect x="0.5" y="0.5" width="15" height="11" rx="2" stroke="currentColor" fill="none"/><rect x="16" y="4" width="2" height="4" rx="1"/><rect x="2" y="2" width="10" height="7" rx="1"/></svg>
-                </div>
-            </div>
-
-            <div class="app-header">
-                <div class="app-logo">midas</div>
-                <div class="header-icons">
-                    <svg class="header-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
-                    <svg class="header-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
-                </div>
-            </div>
+            <div class="status-bar"><span>09:41</span><div class="status-bar-right"><svg width="16" height="12" viewBox="0 0 16 12" fill="currentColor"><rect x="0" y="6" width="3" height="6" rx="1"/><rect x="5" y="4" width="3" height="8" rx="1"/><rect x="10" y="1" width="3" height="11" rx="1"/></svg><svg width="18" height="12" viewBox="0 0 18 12" fill="currentColor"><rect x="0.5" y="0.5" width="15" height="11" rx="2" stroke="currentColor" fill="none"/><rect x="16" y="4" width="2" height="4" rx="1"/><rect x="2" y="2" width="10" height="7" rx="1"/></svg></div></div>
+            <div class="app-header"><div class="app-logo">midas</div><div class="header-icons"><svg class="header-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg><svg class="header-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg></div></div>
 
             <div class="portfolio-summary">
-                <div class="portfolio-label">Total Portfolio Value</div>
+                <div class="portfolio-label" data-en="Total Portfolio Value" data-tr="Toplam Portfoy Degeri">Total Portfolio Value</div>
                 <div class="portfolio-value">47,832.50 &#8378;</div>
-                <div class="portfolio-change">
-                    <svg width="12" height="12" viewBox="0 0 12 12" fill="currentColor"><path d="M6 2L10 7H2L6 2Z"/></svg>
-                    +1,245.00 (+2.67%) today
-                </div>
+                <div class="portfolio-change"><svg width="12" height="12" viewBox="0 0 12 12" fill="currentColor"><path d="M6 2L10 7H2L6 2Z"/></svg> <span data-en="+1,245.00 (+2.67%) today" data-tr="+1,245.00 (+%2.67) bugun">+1,245.00 (+2.67%) today</span></div>
             </div>
 
-            <!-- Fear & Greed Widget -->
             <div class="fg-widget" onclick="showScreen('detail')">
                 <div class="fg-widget-header">
-                    <span class="fg-widget-title">BIST Fear & Greed Index</span>
-                    <span class="fg-widget-badge fear">Fear</span>
+                    <span class="fg-widget-title" data-en="BIST Fear &amp; Greed Index" data-tr="BIST Korku &amp; Acgozluluk Endeksi">BIST Fear &amp; Greed Index</span>
+                    <span class="fg-widget-badge fear" data-en="Fear" data-tr="Korku">Fear</span>
                 </div>
                 <div class="fg-gauge-container">
-                    <svg class="fg-gauge-svg" viewBox="0 0 200 110">
-                        <defs>
-                            <linearGradient id="gaugeGrad" x1="0%" y1="0%" x2="100%" y2="0%">
-                                <stop offset="0%" stop-color="#ef4444"/>
-                                <stop offset="25%" stop-color="#f97316"/>
-                                <stop offset="50%" stop-color="#eab308"/>
-                                <stop offset="75%" stop-color="#22c55e"/>
-                                <stop offset="100%" stop-color="#16a34a"/>
-                            </linearGradient>
-                        </defs>
-                        <path d="M 20 100 A 80 80 0 0 1 180 100" fill="none" stroke="#e5e7eb" stroke-width="12" stroke-linecap="round"/>
-                        <path d="M 20 100 A 80 80 0 0 1 180 100" fill="none" stroke="url(#gaugeGrad)" stroke-width="12" stroke-linecap="round" stroke-dasharray="251" stroke-dashoffset="0"/>
-                        <g transform="rotate(-54, 100, 100)">
-                            <line x1="100" y1="100" x2="100" y2="35" stroke="#1a1d24" stroke-width="2.5" stroke-linecap="round"/>
-                            <circle cx="100" cy="100" r="5" fill="#1a1d24"/>
-                        </g>
-                    </svg>
+                    <svg class="fg-gauge-svg" viewBox="0 0 200 110"><defs><linearGradient id="gaugeGrad" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#ef4444"/><stop offset="25%" stop-color="#f97316"/><stop offset="50%" stop-color="#eab308"/><stop offset="75%" stop-color="#22c55e"/><stop offset="100%" stop-color="#16a34a"/></linearGradient></defs><path d="M 20 100 A 80 80 0 0 1 180 100" fill="none" stroke="#e5e7eb" stroke-width="12" stroke-linecap="round"/><path d="M 20 100 A 80 80 0 0 1 180 100" fill="none" stroke="url(#gaugeGrad)" stroke-width="12" stroke-linecap="round" stroke-dasharray="251" stroke-dashoffset="0"/><g transform="rotate(-54, 100, 100)"><line x1="100" y1="100" x2="100" y2="35" stroke="#1a1d24" stroke-width="2.5" stroke-linecap="round"/><circle cx="100" cy="100" r="5" fill="#1a1d24"/></g></svg>
                     <div class="fg-gauge-value" style="color: var(--accent-red);">32</div>
-                    <div class="fg-gauge-label" style="color: var(--fear);">Fear</div>
-                    <div class="fg-gauge-sublabel">Last updated: Today, 18:30</div>
+                    <div class="fg-gauge-label" style="color: var(--fear);" data-en="Fear" data-tr="Korku">Fear</div>
+                    <div class="fg-gauge-sublabel" data-en="Last updated: Today, 18:30" data-tr="Son guncelleme: Bugun, 18:30">Last updated: Today, 18:30</div>
                 </div>
                 <div class="fg-widget-footer">
-                    <div class="fg-footer-item">
-                        <div class="fg-footer-item-label">Previous Close</div>
-                        <div class="fg-footer-item-value" style="color: var(--fear);">38</div>
-                    </div>
-                    <div class="fg-footer-item">
-                        <div class="fg-footer-item-label">1 Week Ago</div>
-                        <div class="fg-footer-item-value" style="color: var(--neutral);">52</div>
-                    </div>
-                    <div class="fg-footer-item">
-                        <div class="fg-footer-item-label">1 Month Ago</div>
-                        <div class="fg-footer-item-value" style="color: var(--greed);">71</div>
-                    </div>
+                    <div class="fg-footer-item"><div class="fg-footer-item-label" data-en="Previous Close" data-tr="Onceki Kapanis">Previous Close</div><div class="fg-footer-item-value" style="color: var(--fear);">38</div></div>
+                    <div class="fg-footer-item"><div class="fg-footer-item-label" data-en="1 Week Ago" data-tr="1 Hafta Once">1 Week Ago</div><div class="fg-footer-item-value" style="color: var(--neutral);">52</div></div>
+                    <div class="fg-footer-item"><div class="fg-footer-item-label" data-en="1 Month Ago" data-tr="1 Ay Once">1 Month Ago</div><div class="fg-footer-item-value" style="color: var(--greed);">71</div></div>
                 </div>
-                <div class="fg-tap-hint">
-                    Tap to see full breakdown
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6"/></svg>
-                </div>
+                <div class="fg-tap-hint" data-en="Tap to see full breakdown" data-tr="Detaylar icin dokun">Tap to see full breakdown <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6"/></svg></div>
             </div>
 
-            <!-- Watchlist -->
             <div class="section-header">
-                <span class="section-title">Watchlist</span>
-                <span class="section-link">See All</span>
+                <span class="section-title" data-en="Watchlist" data-tr="Takip Listesi">Watchlist</span>
+                <span class="section-link" data-en="See All" data-tr="Tumunu Gor">See All</span>
             </div>
-            <div class="watchlist-item">
-                <div class="stock-icon">THY</div>
-                <div class="stock-info"><div class="stock-name">Turkish Airlines</div><div class="stock-ticker">THYAO</div></div>
-                <div class="stock-price-info"><div class="stock-price">312.50 &#8378;</div><div class="stock-change negative">-2.14%</div></div>
-            </div>
-            <div class="watchlist-item">
-                <div class="stock-icon">GRN</div>
-                <div class="stock-info"><div class="stock-name">Garanti BBVA</div><div class="stock-ticker">GARAN</div></div>
-                <div class="stock-price-info"><div class="stock-price">128.40 &#8378;</div><div class="stock-change positive">+1.85%</div></div>
-            </div>
-            <div class="watchlist-item">
-                <div class="stock-icon">ERG</div>
-                <div class="stock-info"><div class="stock-name">Eregli Demir Celik</div><div class="stock-ticker">EREGL</div></div>
-                <div class="stock-price-info"><div class="stock-price">54.20 &#8378;</div><div class="stock-change positive">+3.62%</div></div>
-            </div>
-            <div class="watchlist-item" style="margin-bottom: 80px;">
-                <div class="stock-icon">BIM</div>
-                <div class="stock-info"><div class="stock-name">BIM Magazalar</div><div class="stock-ticker">BIMAS</div></div>
-                <div class="stock-price-info"><div class="stock-price">620.00 &#8378;</div><div class="stock-change negative">-0.48%</div></div>
-            </div>
+            <div class="watchlist-item"><div class="stock-icon">THY</div><div class="stock-info"><div class="stock-name">Turkish Airlines</div><div class="stock-ticker">THYAO</div></div><div class="stock-price-info"><div class="stock-price">312.50 &#8378;</div><div class="stock-change negative">-2.14%</div></div></div>
+            <div class="watchlist-item"><div class="stock-icon">GRN</div><div class="stock-info"><div class="stock-name">Garanti BBVA</div><div class="stock-ticker">GARAN</div></div><div class="stock-price-info"><div class="stock-price">128.40 &#8378;</div><div class="stock-change positive">+1.85%</div></div></div>
+            <div class="watchlist-item"><div class="stock-icon">ERG</div><div class="stock-info"><div class="stock-name">Eregli Demir Celik</div><div class="stock-ticker">EREGL</div></div><div class="stock-price-info"><div class="stock-price">54.20 &#8378;</div><div class="stock-change positive">+3.62%</div></div></div>
+            <div class="watchlist-item" style="margin-bottom: 80px;"><div class="stock-icon">BIM</div><div class="stock-info"><div class="stock-name">BIM Magazalar</div><div class="stock-ticker">BIMAS</div></div><div class="stock-price-info"><div class="stock-price">620.00 &#8378;</div><div class="stock-change negative">-0.48%</div></div></div>
         </div>
-
         <div class="bottom-nav">
-            <div class="bottom-nav-item active">
-                <svg class="bottom-nav-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M3 13h1v7c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2v-7h1a1 1 0 0 0 .7-1.7l-9-9a1 1 0 0 0-1.4 0l-9 9A1 1 0 0 0 3 13z"/></svg>
-                Home
-            </div>
-            <div class="bottom-nav-item">
-                <svg class="bottom-nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
-                Explore
-            </div>
-            <div class="bottom-nav-item">
-                <svg class="bottom-nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
-                Trade
-            </div>
-            <div class="bottom-nav-item">
-                <svg class="bottom-nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-                Profile
-            </div>
+            <div class="bottom-nav-item active"><svg class="bottom-nav-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M3 13h1v7c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2v-7h1a1 1 0 0 0 .7-1.7l-9-9a1 1 0 0 0-1.4 0l-9 9A1 1 0 0 0 3 13z"/></svg><span data-en="Home" data-tr="Ana Sayfa">Home</span></div>
+            <div class="bottom-nav-item"><svg class="bottom-nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg><span data-en="Explore" data-tr="Kesfet">Explore</span></div>
+            <div class="bottom-nav-item"><svg class="bottom-nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg><span data-en="Trade" data-tr="Islem">Trade</span></div>
+            <div class="bottom-nav-item"><svg class="bottom-nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg><span data-en="Profile" data-tr="Profil">Profile</span></div>
         </div>
     </div>
 
     <!-- ========== SCREEN 2: DETAIL VIEW ========== -->
     <div class="screen" id="screen-detail">
         <div class="phone-frame">
-            <div class="status-bar">
-                <span>09:41</span>
-                <div class="status-bar-right">
-                    <svg width="16" height="12" viewBox="0 0 16 12" fill="currentColor"><rect x="0" y="6" width="3" height="6" rx="1"/><rect x="5" y="4" width="3" height="8" rx="1"/><rect x="10" y="1" width="3" height="11" rx="1"/></svg>
-                    <svg width="18" height="12" viewBox="0 0 18 12" fill="currentColor"><rect x="0.5" y="0.5" width="15" height="11" rx="2" stroke="currentColor" fill="none"/><rect x="16" y="4" width="2" height="4" rx="1"/><rect x="2" y="2" width="10" height="7" rx="1"/></svg>
-                </div>
-            </div>
-
-            <div class="detail-header">
-                <div class="back-btn" onclick="showScreen('home')">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m15 18-6-6 6-6"/></svg>
-                </div>
-                <div class="detail-title">BIST Fear & Greed Index</div>
-            </div>
+            <div class="status-bar"><span>09:41</span><div class="status-bar-right"><svg width="16" height="12" viewBox="0 0 16 12" fill="currentColor"><rect x="0" y="6" width="3" height="6" rx="1"/><rect x="5" y="4" width="3" height="8" rx="1"/><rect x="10" y="1" width="3" height="11" rx="1"/></svg><svg width="18" height="12" viewBox="0 0 18 12" fill="currentColor"><rect x="0.5" y="0.5" width="15" height="11" rx="2" stroke="currentColor" fill="none"/><rect x="16" y="4" width="2" height="4" rx="1"/><rect x="2" y="2" width="10" height="7" rx="1"/></svg></div></div>
+            <div class="detail-header"><div class="back-btn" onclick="showScreen('home')"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m15 18-6-6 6-6"/></svg></div><div class="detail-title" data-en="BIST Fear &amp; Greed Index" data-tr="BIST Korku &amp; Acgozluluk Endeksi">BIST Fear &amp; Greed Index</div></div>
 
             <div class="detail-gauge-section">
-                <svg class="detail-gauge-svg" viewBox="0 0 260 140">
-                    <defs>
-                        <linearGradient id="gaugeGrad2" x1="0%" y1="0%" x2="100%" y2="0%">
-                            <stop offset="0%" stop-color="#ef4444"/>
-                            <stop offset="25%" stop-color="#f97316"/>
-                            <stop offset="50%" stop-color="#eab308"/>
-                            <stop offset="75%" stop-color="#22c55e"/>
-                            <stop offset="100%" stop-color="#16a34a"/>
-                        </linearGradient>
-                    </defs>
-                    <path d="M 25 125 A 105 105 0 0 1 235 125" fill="none" stroke="#e5e7eb" stroke-width="14" stroke-linecap="round"/>
-                    <path d="M 25 125 A 105 105 0 0 1 235 125" fill="none" stroke="url(#gaugeGrad2)" stroke-width="14" stroke-linecap="round" stroke-dasharray="330" stroke-dashoffset="0"/>
-                    <g transform="rotate(-54, 130, 125)">
-                        <line x1="130" y1="125" x2="130" y2="38" stroke="#1a1d24" stroke-width="3" stroke-linecap="round"/>
-                        <circle cx="130" cy="125" r="6" fill="#1a1d24"/>
-                    </g>
-                    <text x="30" y="138" fill="#9ca3af" font-size="10">0</text>
-                    <text x="125" y="18" fill="#9ca3af" font-size="10">50</text>
-                    <text x="223" y="138" fill="#9ca3af" font-size="10">100</text>
-                </svg>
+                <svg class="detail-gauge-svg" viewBox="0 0 260 140"><defs><linearGradient id="gaugeGrad2" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#ef4444"/><stop offset="25%" stop-color="#f97316"/><stop offset="50%" stop-color="#eab308"/><stop offset="75%" stop-color="#22c55e"/><stop offset="100%" stop-color="#16a34a"/></linearGradient></defs><path d="M 25 125 A 105 105 0 0 1 235 125" fill="none" stroke="#e5e7eb" stroke-width="14" stroke-linecap="round"/><path d="M 25 125 A 105 105 0 0 1 235 125" fill="none" stroke="url(#gaugeGrad2)" stroke-width="14" stroke-linecap="round" stroke-dasharray="330" stroke-dashoffset="0"/><g transform="rotate(-54, 130, 125)"><line x1="130" y1="125" x2="130" y2="38" stroke="#1a1d24" stroke-width="3" stroke-linecap="round"/><circle cx="130" cy="125" r="6" fill="#1a1d24"/></g><text x="30" y="138" fill="#9ca3af" font-size="10">0</text><text x="125" y="18" fill="#9ca3af" font-size="10">50</text><text x="223" y="138" fill="#9ca3af" font-size="10">100</text></svg>
                 <div class="detail-gauge-value" style="color: var(--accent-red);">32</div>
-                <div class="detail-gauge-label" style="color: var(--fear);">Fear</div>
-                <div class="detail-gauge-date">Updated: Feb 24, 2026 at 18:30 (End of Day)</div>
+                <div class="detail-gauge-label" style="color: var(--fear);" data-en="Fear" data-tr="Korku">Fear</div>
+                <div class="detail-gauge-date" data-en="Updated: Feb 24, 2026 at 18:30 (End of Day)" data-tr="Guncelleme: 24 Sub 2026, 18:30 (Gun Sonu)">Updated: Feb 24, 2026 at 18:30 (End of Day)</div>
             </div>
 
-            <!-- AI Summary -->
             <div class="ai-summary">
-                <div class="ai-summary-header">
-                    <span class="ai-badge">AI</span>
-                    <span class="ai-summary-label">Today's Market Sentiment</span>
-                </div>
-                <div class="ai-summary-text">
-                    The index dropped 6 points today, driven primarily by a spike in USD/TRY volatility (+2.8%) and net foreign investor outflows of 980M TRY. However, BIST-100 breadth remains relatively healthy with advancing stocks still outnumbering decliners, preventing a slide into Extreme Fear territory.
-                </div>
+                <div class="ai-summary-header"><span class="ai-badge">AI</span><span class="ai-summary-label" data-en="Today's Market Sentiment" data-tr="Bugunun Piyasa Duyarliligi">Today's Market Sentiment</span></div>
+                <div class="ai-summary-text" data-en="The index dropped 6 points today, driven primarily by a spike in USD/TRY volatility (+2.8%) and net foreign investor outflows of 980M TRY. However, BIST-100 breadth remains relatively healthy with advancing stocks still outnumbering decliners, preventing a slide into Extreme Fear territory." data-tr="Endeks bugun 6 puan dustu. Dususun temel nedeni USD/TRY volatilitesindeki artis (+%2.8) ve 980M TL net yabanci yatirimci cikisi. Ancak BIST-100 genislik gostergesi hala saglam; yukselenler dusenleri gecmeye devam ediyor ve endeksin Asiri Korku bolgesine kaymasi engelleniyor.">The index dropped 6 points today, driven primarily by a spike in USD/TRY volatility (+2.8%) and net foreign investor outflows of 980M TRY. However, BIST-100 breadth remains relatively healthy with advancing stocks still outnumbering decliners, preventing a slide into Extreme Fear territory.</div>
             </div>
 
-            <!-- Portfolio Comparison -->
             <div class="portfolio-compare">
-                <div class="compare-header">Compare to Your Portfolio</div>
-                <div class="compare-row">
-                    <div class="compare-label">Market</div>
-                    <div class="compare-bar-container">
-                        <div class="compare-bar-bg"></div>
-                        <div class="compare-bar-marker" style="left: 32%; background: var(--fear);"></div>
-                    </div>
-                    <div class="compare-value" style="color: var(--fear);">32</div>
-                </div>
-                <div class="compare-row">
-                    <div class="compare-label">Your Portfolio</div>
-                    <div class="compare-bar-container">
-                        <div class="compare-bar-bg"></div>
-                        <div class="compare-bar-marker" style="left: 48%; background: var(--neutral);"></div>
-                    </div>
-                    <div class="compare-value" style="color: var(--neutral);">48</div>
-                </div>
-                <div style="font-size: 12px; color: var(--text-secondary); margin-top: 2px; line-height: 1.5;">
-                    Your portfolio is more resilient than the broader market right now. Your holdings lean Neutral while the market is in Fear.
-                </div>
+                <div class="compare-header" data-en="Compare to Your Portfolio" data-tr="Portfoyunle Karsilastir">Compare to Your Portfolio</div>
+                <div class="compare-row"><div class="compare-label" data-en="Market" data-tr="Piyasa">Market</div><div class="compare-bar-container"><div class="compare-bar-bg"></div><div class="compare-bar-marker" style="left: 32%; background: var(--fear);"></div></div><div class="compare-value" style="color: var(--fear);">32</div></div>
+                <div class="compare-row"><div class="compare-label" data-en="Your Portfolio" data-tr="Portfoyun">Your Portfolio</div><div class="compare-bar-container"><div class="compare-bar-bg"></div><div class="compare-bar-marker" style="left: 48%; background: var(--neutral);"></div></div><div class="compare-value" style="color: var(--neutral);">48</div></div>
+                <div style="font-size: 12px; color: var(--text-secondary); margin-top: 2px; line-height: 1.5;" data-en="Your portfolio is more resilient than the broader market right now. Your holdings lean Neutral while the market is in Fear." data-tr="Portfoyun su an genel piyasadan daha direncli. Varliklarinin notr bir gorunumde iken piyasa Korku bolgesinde.">Your portfolio is more resilient than the broader market right now. Your holdings lean Neutral while the market is in Fear.</div>
             </div>
 
-            <!-- Sub-Indicators -->
             <div class="indicators-section">
-                <div class="indicators-title">Index Components</div>
-
-                <div class="indicator-card">
-                    <div class="indicator-header">
-                        <span class="indicator-name">BIST-100 Momentum</span>
-                        <span class="indicator-score" style="color: var(--fear);">35</span>
-                    </div>
-                    <div class="indicator-bar-bg"><div class="indicator-bar-fill" style="width: 35%; background: var(--fear);"></div></div>
-                    <div class="indicator-sublabel">Price is 1.2% below the 125-day moving average</div>
-                </div>
-
-                <div class="indicator-card">
-                    <div class="indicator-header">
-                        <span class="indicator-name">Market Breadth</span>
-                        <span class="indicator-score" style="color: var(--neutral);">52</span>
-                    </div>
-                    <div class="indicator-bar-bg"><div class="indicator-bar-fill" style="width: 52%; background: var(--neutral);"></div></div>
-                    <div class="indicator-sublabel">Advancing stocks slightly outnumber declining stocks</div>
-                </div>
-
-                <div class="indicator-card">
-                    <div class="indicator-header">
-                        <span class="indicator-name">52-Week Highs vs Lows</span>
-                        <span class="indicator-score" style="color: var(--fear-extreme);">24</span>
-                    </div>
-                    <div class="indicator-bar-bg"><div class="indicator-bar-fill" style="width: 24%; background: var(--fear-extreme);"></div></div>
-                    <div class="indicator-sublabel">Net new 52-week lows dominating across BIST</div>
-                </div>
-
-                <div class="indicator-card">
-                    <div class="indicator-header">
-                        <span class="indicator-name">Volatility</span>
-                        <span class="indicator-score" style="color: var(--fear);">28</span>
-                    </div>
-                    <div class="indicator-bar-bg"><div class="indicator-bar-fill" style="width: 28%; background: var(--fear);"></div></div>
-                    <div class="indicator-sublabel">BIST-100 realized volatility is 1.8x the 50-day average</div>
-                </div>
-
-                <div class="indicator-card">
-                    <div class="indicator-header">
-                        <span class="indicator-name">Safe Haven Demand</span>
-                        <span class="indicator-score" style="color: var(--fear-extreme);">22</span>
-                    </div>
-                    <div class="indicator-bar-bg"><div class="indicator-bar-fill" style="width: 22%; background: var(--fear-extreme);"></div></div>
-                    <div class="indicator-sublabel">Gold and bonds outperforming equities over 20 days</div>
-                </div>
-
-                <div class="indicator-card">
-                    <div class="indicator-header">
-                        <span class="indicator-name">Foreign Investor Flow</span>
-                        <span class="indicator-score" style="color: var(--fear-extreme);">18</span>
-                    </div>
-                    <div class="indicator-bar-bg"><div class="indicator-bar-fill" style="width: 18%; background: var(--fear-extreme);"></div></div>
-                    <div class="indicator-sublabel">Net foreign selling of 2.4B TRY over the past 5 days</div>
-                </div>
-
-                <div class="indicator-card">
-                    <div class="indicator-header">
-                        <span class="indicator-name">USD/TRY Volatility</span>
-                        <span class="indicator-score" style="color: var(--neutral);">45</span>
-                    </div>
-                    <div class="indicator-bar-bg"><div class="indicator-bar-fill" style="width: 45%; background: var(--neutral);"></div></div>
-                    <div class="indicator-sublabel">FX volatility slightly above average but stable</div>
-                </div>
-
-                <div class="disclaimer">
-                    <span class="disclaimer-icon">&#9432;</span>
-                    This index is for informational purposes only and does not constitute investment advice. Past sentiment readings do not predict future market performance. Always do your own research before making investment decisions.
-                </div>
+                <div class="indicators-title" data-en="Index Components" data-tr="Endeks Bilesenleri">Index Components</div>
+                <div class="indicator-card"><div class="indicator-header"><span class="indicator-name" data-en="BIST-100 Momentum" data-tr="BIST-100 Momentum">BIST-100 Momentum</span><span class="indicator-score" style="color: var(--fear);">35</span></div><div class="indicator-bar-bg"><div class="indicator-bar-fill" style="width: 35%; background: var(--fear);"></div></div><div class="indicator-sublabel" data-en="Price is 1.2% below the 125-day moving average" data-tr="Fiyat 125 gunluk hareketli ortalamanin %1.2 altinda">Price is 1.2% below the 125-day moving average</div></div>
+                <div class="indicator-card"><div class="indicator-header"><span class="indicator-name" data-en="Market Breadth" data-tr="Piyasa Genisligi">Market Breadth</span><span class="indicator-score" style="color: var(--neutral);">52</span></div><div class="indicator-bar-bg"><div class="indicator-bar-fill" style="width: 52%; background: var(--neutral);"></div></div><div class="indicator-sublabel" data-en="Advancing stocks slightly outnumber declining stocks" data-tr="Yukselenler, dusenleri hafif gecti">Advancing stocks slightly outnumber declining stocks</div></div>
+                <div class="indicator-card"><div class="indicator-header"><span class="indicator-name" data-en="52-Week Highs vs Lows" data-tr="52 Haftalik Zirve / Dip">52-Week Highs vs Lows</span><span class="indicator-score" style="color: var(--fear-extreme);">24</span></div><div class="indicator-bar-bg"><div class="indicator-bar-fill" style="width: 24%; background: var(--fear-extreme);"></div></div><div class="indicator-sublabel" data-en="Net new 52-week lows dominating across BIST" data-tr="BIST genelinde 52 haftalik yeni dipler hakim">Net new 52-week lows dominating across BIST</div></div>
+                <div class="indicator-card"><div class="indicator-header"><span class="indicator-name" data-en="Volatility" data-tr="Volatilite">Volatility</span><span class="indicator-score" style="color: var(--fear);">28</span></div><div class="indicator-bar-bg"><div class="indicator-bar-fill" style="width: 28%; background: var(--fear);"></div></div><div class="indicator-sublabel" data-en="BIST-100 realized volatility is 1.8x the 50-day average" data-tr="BIST-100 gerceklesen volatilite, 50 gunluk ortalamanin 1.8 kati">BIST-100 realized volatility is 1.8x the 50-day average</div></div>
+                <div class="indicator-card"><div class="indicator-header"><span class="indicator-name" data-en="Safe Haven Demand" data-tr="Guvenli Liman Talebi">Safe Haven Demand</span><span class="indicator-score" style="color: var(--fear-extreme);">22</span></div><div class="indicator-bar-bg"><div class="indicator-bar-fill" style="width: 22%; background: var(--fear-extreme);"></div></div><div class="indicator-sublabel" data-en="Gold and bonds outperforming equities over 20 days" data-tr="Altin ve tahviller 20 gunde hisse senetlerini geride birakti">Gold and bonds outperforming equities over 20 days</div></div>
+                <div class="indicator-card"><div class="indicator-header"><span class="indicator-name" data-en="Foreign Investor Flow" data-tr="Yabanci Yatirimci Akisi">Foreign Investor Flow</span><span class="indicator-score" style="color: var(--fear-extreme);">18</span></div><div class="indicator-bar-bg"><div class="indicator-bar-fill" style="width: 18%; background: var(--fear-extreme);"></div></div><div class="indicator-sublabel" data-en="Net foreign selling of 2.4B TRY over the past 5 days" data-tr="Son 5 gunde 2.4 Milyar TL net yabanci satisi">Net foreign selling of 2.4B TRY over the past 5 days</div></div>
+                <div class="indicator-card"><div class="indicator-header"><span class="indicator-name" data-en="USD/TRY Volatility" data-tr="USD/TRY Volatilite">USD/TRY Volatility</span><span class="indicator-score" style="color: var(--neutral);">45</span></div><div class="indicator-bar-bg"><div class="indicator-bar-fill" style="width: 45%; background: var(--neutral);"></div></div><div class="indicator-sublabel" data-en="FX volatility slightly above average but stable" data-tr="Doviz volatilitesi ortalamanin biraz uzerinde ama istikrarli">FX volatility slightly above average but stable</div></div>
+                <div class="disclaimer" data-en="This index is for informational purposes only and does not constitute investment advice. Past sentiment readings do not predict future market performance." data-tr="Bu endeks yalnizca bilgilendirme amaclidir ve yatirim tavsiyesi niteliginde degildir. Gecmis duyarlilik okumalari gelecekteki piyasa performansini ongormez.">&#9432; This index is for informational purposes only and does not constitute investment advice. Past sentiment readings do not predict future market performance.</div>
             </div>
         </div>
     </div>
@@ -670,70 +303,22 @@
     <!-- ========== SCREEN 3: HISTORICAL CHART ========== -->
     <div class="screen" id="screen-history">
         <div class="phone-frame">
-            <div class="status-bar">
-                <span>09:41</span>
-                <div class="status-bar-right">
-                    <svg width="16" height="12" viewBox="0 0 16 12" fill="currentColor"><rect x="0" y="6" width="3" height="6" rx="1"/><rect x="5" y="4" width="3" height="8" rx="1"/><rect x="10" y="1" width="3" height="11" rx="1"/></svg>
-                    <svg width="18" height="12" viewBox="0 0 18 12" fill="currentColor"><rect x="0.5" y="0.5" width="15" height="11" rx="2" stroke="currentColor" fill="none"/><rect x="16" y="4" width="2" height="4" rx="1"/><rect x="2" y="2" width="10" height="7" rx="1"/></svg>
-                </div>
-            </div>
-
-            <div class="detail-header">
-                <div class="back-btn" onclick="showScreen('detail')">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m15 18-6-6 6-6"/></svg>
-                </div>
-                <div class="detail-title">Historical Trend</div>
-            </div>
-
-            <div class="detail-gauge-section" style="padding-bottom: 0;">
-                <div class="detail-gauge-value" style="color: var(--accent-red); font-size: 48px;">32</div>
-                <div class="detail-gauge-label" style="color: var(--fear);">Fear</div>
-                <div class="detail-gauge-date">Feb 24, 2026</div>
-            </div>
-
-            <div class="timeframe-tabs">
-                <div class="tf-tab" onclick="setTimeframe(this)">1W</div>
-                <div class="tf-tab active" onclick="setTimeframe(this)">1M</div>
-                <div class="tf-tab" onclick="setTimeframe(this)">3M</div>
-                <div class="tf-tab" onclick="setTimeframe(this)">1Y</div>
-            </div>
-
-            <div class="chart-container">
-                <canvas id="historyChart" class="chart-canvas"></canvas>
-            </div>
-
+            <div class="status-bar"><span>09:41</span><div class="status-bar-right"><svg width="16" height="12" viewBox="0 0 16 12" fill="currentColor"><rect x="0" y="6" width="3" height="6" rx="1"/><rect x="5" y="4" width="3" height="8" rx="1"/><rect x="10" y="1" width="3" height="11" rx="1"/></svg><svg width="18" height="12" viewBox="0 0 18 12" fill="currentColor"><rect x="0.5" y="0.5" width="15" height="11" rx="2" stroke="currentColor" fill="none"/><rect x="16" y="4" width="2" height="4" rx="1"/><rect x="2" y="2" width="10" height="7" rx="1"/></svg></div></div>
+            <div class="detail-header"><div class="back-btn" onclick="showScreen('detail')"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m15 18-6-6 6-6"/></svg></div><div class="detail-title" data-en="Historical Trend" data-tr="Tarihsel Trend">Historical Trend</div></div>
+            <div class="detail-gauge-section" style="padding-bottom: 0;"><div class="detail-gauge-value" style="color: var(--accent-red); font-size: 48px;">32</div><div class="detail-gauge-label" style="color: var(--fear);" data-en="Fear" data-tr="Korku">Fear</div><div class="detail-gauge-date">24 Sub 2026</div></div>
+            <div class="timeframe-tabs"><div class="tf-tab" onclick="setTimeframe(this)">1W</div><div class="tf-tab active" onclick="setTimeframe(this)">1M</div><div class="tf-tab" onclick="setTimeframe(this)">3M</div><div class="tf-tab" onclick="setTimeframe(this)">1Y</div></div>
+            <div class="chart-container"><canvas id="historyChart" class="chart-canvas"></canvas></div>
             <div class="chart-stats">
-                <div class="chart-stat">
-                    <div class="chart-stat-label">1M High</div>
-                    <div class="chart-stat-value" style="color: var(--greed);">74</div>
-                    <div class="chart-stat-sublabel">Feb 3</div>
-                </div>
-                <div class="chart-stat">
-                    <div class="chart-stat-label">1M Low</div>
-                    <div class="chart-stat-value" style="color: var(--fear-extreme);">28</div>
-                    <div class="chart-stat-sublabel">Feb 21</div>
-                </div>
-                <div class="chart-stat">
-                    <div class="chart-stat-label">1M Avg</div>
-                    <div class="chart-stat-value" style="color: var(--neutral);">51</div>
-                    <div class="chart-stat-sublabel">Neutral</div>
-                </div>
+                <div class="chart-stat"><div class="chart-stat-label" data-en="1M High" data-tr="1A Zirve">1M High</div><div class="chart-stat-value" style="color: var(--greed);">74</div><div class="chart-stat-sublabel">3 Sub</div></div>
+                <div class="chart-stat"><div class="chart-stat-label" data-en="1M Low" data-tr="1A Dip">1M Low</div><div class="chart-stat-value" style="color: var(--fear-extreme);">28</div><div class="chart-stat-sublabel">21 Sub</div></div>
+                <div class="chart-stat"><div class="chart-stat-label" data-en="1M Avg" data-tr="1A Ort">1M Avg</div><div class="chart-stat-value" style="color: var(--neutral);">51</div><div class="chart-stat-sublabel" data-en="Neutral" data-tr="Notr">Neutral</div></div>
             </div>
-
             <div style="padding: 0 20px 100px;">
                 <div class="ai-summary">
-                    <div class="ai-summary-header">
-                        <span class="ai-badge">AI</span>
-                        <span class="ai-summary-label">Trend Analysis</span>
-                    </div>
-                    <div class="ai-summary-text">
-                        The index has fallen sharply from Greed territory (74) in early February to Fear (32) today -- a 42-point decline in 3 weeks. This is the steepest monthly drop since October 2025. Historical pattern: when the index drops below 30, BIST-100 has averaged a +4.2% return over the following 30 days in 7 of the last 10 instances.
-                    </div>
+                    <div class="ai-summary-header"><span class="ai-badge">AI</span><span class="ai-summary-label" data-en="Trend Analysis" data-tr="Trend Analizi">Trend Analysis</span></div>
+                    <div class="ai-summary-text" data-en="The index has fallen sharply from Greed territory (74) in early February to Fear (32) today -- a 42-point decline in 3 weeks. This is the steepest monthly drop since October 2025. Historical pattern: when the index drops below 30, BIST-100 has averaged a +4.2% return over the following 30 days in 7 of the last 10 instances." data-tr="Endeks, Subat basindaki Acgozluluk bolgesinden (74) bugunun Korku bolgesine (32) sert bir dusus yasadi -- 3 haftada 42 puanlik gerileme. Bu, Ekim 2025'ten bu yana en sert aylik dusus. Tarihsel oruntu: endeks 30'un altina dustugunde, BIST-100 son 10 vakanin 7'sinde takip eden 30 gunde ortalama +%4.2 getiri sagladi.">The index has fallen sharply from Greed territory (74) in early February to Fear (32) today -- a 42-point decline in 3 weeks. This is the steepest monthly drop since October 2025. Historical pattern: when the index drops below 30, BIST-100 has averaged a +4.2% return over the following 30 days in 7 of the last 10 instances.</div>
                 </div>
-                <div class="disclaimer">
-                    <span class="disclaimer-icon">&#9432;</span>
-                    Historical patterns are not guarantees of future performance. The Fear & Greed Index is a descriptive, not predictive, tool.
-                </div>
+                <div class="disclaimer" data-en="Historical patterns are not guarantees of future performance. The Fear &amp; Greed Index is a descriptive, not predictive, tool." data-tr="Tarihsel oruntuler gelecekteki performansin garantisi degildir. Korku ve Acgozluluk Endeksi tanimlayici bir aractir, ongoru araci degildir.">&#9432; Historical patterns are not guarantees of future performance. The Fear &amp; Greed Index is a descriptive, not predictive, tool.</div>
             </div>
         </div>
     </div>
@@ -741,85 +326,28 @@
     <!-- ========== SCREEN 4: STOCK DETAIL ========== -->
     <div class="screen" id="screen-stock">
         <div class="phone-frame">
-            <div class="status-bar">
-                <span>09:41</span>
-                <div class="status-bar-right">
-                    <svg width="16" height="12" viewBox="0 0 16 12" fill="currentColor"><rect x="0" y="6" width="3" height="6" rx="1"/><rect x="5" y="4" width="3" height="8" rx="1"/><rect x="10" y="1" width="3" height="11" rx="1"/></svg>
-                    <svg width="18" height="12" viewBox="0 0 18 12" fill="currentColor"><rect x="0.5" y="0.5" width="15" height="11" rx="2" stroke="currentColor" fill="none"/><rect x="16" y="4" width="2" height="4" rx="1"/><rect x="2" y="2" width="10" height="7" rx="1"/></svg>
-                </div>
-            </div>
+            <div class="status-bar"><span>09:41</span><div class="status-bar-right"><svg width="16" height="12" viewBox="0 0 16 12" fill="currentColor"><rect x="0" y="6" width="3" height="6" rx="1"/><rect x="5" y="4" width="3" height="8" rx="1"/><rect x="10" y="1" width="3" height="11" rx="1"/></svg><svg width="18" height="12" viewBox="0 0 18 12" fill="currentColor"><rect x="0.5" y="0.5" width="15" height="11" rx="2" stroke="currentColor" fill="none"/><rect x="16" y="4" width="2" height="4" rx="1"/><rect x="2" y="2" width="10" height="7" rx="1"/></svg></div></div>
+            <div class="detail-header"><div class="back-btn" onclick="showScreen('home')"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m15 18-6-6 6-6"/></svg></div></div>
+            <div class="stock-detail-header"><div class="stock-detail-icon">THY</div><div><div class="stock-detail-name">Turkish Airlines</div><div class="stock-detail-ticker-row">THYAO &middot; BIST</div></div></div>
+            <div class="stock-detail-price-section"><div class="stock-detail-price">312.50 &#8378;</div><div class="stock-detail-change" style="color: var(--accent-red);"><svg width="12" height="12" viewBox="0 0 12 12" fill="currentColor"><path d="M6 10L2 5h8L6 10Z"/></svg> <span data-en="-6.80 (-2.13%) today" data-tr="-6.80 (-%2.13) bugun">-6.80 (-2.13%) today</span></div></div>
+            <div class="stock-chart-placeholder"><svg width="100%" height="100%" viewBox="0 0 350 150" preserveAspectRatio="none"><defs><linearGradient id="chartFill" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="rgba(239, 68, 68, 0.15)"/><stop offset="100%" stop-color="rgba(239, 68, 68, 0)"/></linearGradient></defs><path d="M0 35 Q20 33 40 37 T80 45 T120 40 T160 55 T200 50 T240 70 T280 85 T320 100 T350 115" fill="none" stroke="var(--accent-red)" stroke-width="2"/><path d="M0 35 Q20 33 40 37 T80 45 T120 40 T160 55 T200 50 T240 70 T280 85 T320 100 T350 115 L350 150 L0 150 Z" fill="url(#chartFill)"/></svg></div>
 
-            <div class="detail-header">
-                <div class="back-btn" onclick="showScreen('home')">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m15 18-6-6 6-6"/></svg>
-                </div>
-            </div>
-
-            <div class="stock-detail-header">
-                <div class="stock-detail-icon">THY</div>
-                <div>
-                    <div class="stock-detail-name">Turkish Airlines</div>
-                    <div class="stock-detail-ticker-row">THYAO &middot; BIST</div>
-                </div>
-            </div>
-
-            <div class="stock-detail-price-section">
-                <div class="stock-detail-price">312.50 &#8378;</div>
-                <div class="stock-detail-change" style="color: var(--accent-red);">
-                    <svg width="12" height="12" viewBox="0 0 12 12" fill="currentColor"><path d="M6 10L2 5h8L6 10Z"/></svg>
-                    -6.80 (-2.13%) today
-                </div>
-            </div>
-
-            <div class="stock-chart-placeholder">
-                <svg width="100%" height="100%" viewBox="0 0 350 150" preserveAspectRatio="none">
-                    <defs>
-                        <linearGradient id="chartFill" x1="0" y1="0" x2="0" y2="1">
-                            <stop offset="0%" stop-color="rgba(239, 68, 68, 0.15)"/>
-                            <stop offset="100%" stop-color="rgba(239, 68, 68, 0)"/>
-                        </linearGradient>
-                    </defs>
-                    <path d="M0 35 Q20 33 40 37 T80 45 T120 40 T160 55 T200 50 T240 70 T280 85 T320 100 T350 115"
-                          fill="none" stroke="var(--accent-red)" stroke-width="2"/>
-                    <path d="M0 35 Q20 33 40 37 T80 45 T120 40 T160 55 T200 50 T240 70 T280 85 T320 100 T350 115 L350 150 L0 150 Z"
-                          fill="url(#chartFill)"/>
-                </svg>
-            </div>
-
-            <!-- Sentiment Banner -->
             <div class="sentiment-banner" onclick="showScreen('detail')">
-                <div class="sentiment-mini-gauge" style="background: var(--accent-red-light); color: var(--accent-red);">
-                    32
-                </div>
-                <div class="sentiment-banner-text">
-                    <div class="sentiment-banner-title" style="color: var(--accent-red);">Market Sentiment: Fear</div>
-                    <div class="sentiment-banner-desc">The broader BIST market is in Fear territory. THYAO is underperforming the market today.</div>
-                </div>
+                <div class="sentiment-mini-gauge" style="background: var(--accent-red-light); color: var(--accent-red);">32</div>
+                <div class="sentiment-banner-text"><div class="sentiment-banner-title" style="color: var(--accent-red);" data-en="Market Sentiment: Fear" data-tr="Piyasa Duyarliligi: Korku">Market Sentiment: Fear</div><div class="sentiment-banner-desc" data-en="The broader BIST market is in Fear territory. THYAO is underperforming the market today." data-tr="Genel BIST piyasasi Korku bolgesinde. THYAO bugun piyasanin altinda performans gosteriyor.">The broader BIST market is in Fear territory. THYAO is underperforming the market today.</div></div>
                 <div class="sentiment-banner-arrow">&#8250;</div>
             </div>
 
-            <!-- AI Insight -->
             <div class="ai-insight-card">
-                <div class="ai-insight-header">
-                    <span class="ai-badge">AI</span>
-                    <span class="ai-insight-title">Technical Consensus</span>
-                </div>
-                <div class="ai-insight-text">
-                    THYAO is displaying a conflict between its trend structure and momentum. The stock trades above all major moving averages (20/50/200-day), keeping the uptrend intact. However, RSI has dropped to 28.3 -- into oversold territory -- while MACD continues bearish with elevated volume (1.5x avg). The oversold RSI may set up a near-term bounce, but MACD needs to narrow first.
-                </div>
-                <div class="ai-consensus-label" style="background: var(--accent-red-light); color: var(--accent-red);">
-                    Lean Bearish (Short-term) &middot; Bullish (Long-term)
-                </div>
-                <div class="ai-feedback-row">
-                    <span class="ai-feedback-label">Was this helpful?</span>
-                    <div class="ai-feedback-btn">&#128077;</div>
-                    <div class="ai-feedback-btn">&#128078;</div>
-                </div>
+                <div class="ai-insight-header"><span class="ai-badge">AI</span><span class="ai-insight-title" data-en="Technical Consensus" data-tr="Teknik Uzlasi">Technical Consensus</span></div>
+                <div class="ai-insight-text" data-en="THYAO is displaying a conflict between its trend structure and momentum. The stock trades above all major moving averages (20/50/200-day), keeping the uptrend intact. However, RSI has dropped to 28.3 -- into oversold territory -- while MACD continues bearish with elevated volume (1.5x avg). The oversold RSI may set up a near-term bounce, but MACD needs to narrow first." data-tr="THYAO'da trend yapisi ile momentum arasinda bir catisma gorulmektedir. Hisse tum onemli hareketli ortalamalarin (20/50/200 gun) uzerinde islem goruyor ve yukselis trendi devam ediyor. Ancak RSI 28.3'e duserek asiri satim bolgesine girdi, MACD dusus egiliminde ve hacim ortalamanin 1.5 kati. Asiri satim RSI'i kisa vadeli bir sicrama firsati olusturabilir, ancak MACD'nin oncelikle daralmasi gerekiyor.">THYAO is displaying a conflict between its trend structure and momentum. The stock trades above all major moving averages (20/50/200-day), keeping the uptrend intact. However, RSI has dropped to 28.3 -- into oversold territory -- while MACD continues bearish with elevated volume (1.5x avg). The oversold RSI may set up a near-term bounce, but MACD needs to narrow first.</div>
+                <div class="ai-consensus-label" style="background: var(--accent-red-light); color: var(--accent-red);" data-en="Lean Bearish (Short-term) · Bullish (Long-term)" data-tr="Hafif Dusus (Kisa Vade) · Yukselis (Uzun Vade)">Lean Bearish (Short-term) &middot; Bullish (Long-term)</div>
+                <div class="ai-feedback-row"><span class="ai-feedback-label" data-en="Was this helpful?" data-tr="Faydali oldu mu?">Was this helpful?</span><div class="ai-feedback-btn">&#128077;</div><div class="ai-feedback-btn">&#128078;</div></div>
             </div>
 
             <div class="stock-action-buttons">
-                <button class="action-btn buy">Buy</button>
-                <button class="action-btn sell">Sell</button>
+                <button class="action-btn buy" data-en="Buy" data-tr="Al">Buy</button>
+                <button class="action-btn sell" data-en="Sell" data-tr="Sat">Sell</button>
             </div>
         </div>
     </div>
@@ -827,6 +355,8 @@
     <div class="prototype-label">PROTOTYPE -- Midas Fear & Greed Index</div>
 
     <script>
+        let currentLang = 'en';
+
         function showScreen(screen) {
             document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
             document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
@@ -843,72 +373,35 @@
             drawChart();
         }
 
+        function toggleLang() {
+            currentLang = currentLang === 'en' ? 'tr' : 'en';
+            document.querySelector('.lang-toggle').textContent = currentLang === 'en' ? 'TR' : 'EN';
+            document.querySelectorAll('[data-' + currentLang + ']').forEach(el => {
+                const text = el.getAttribute('data-' + currentLang);
+                if (text) el.textContent = text;
+            });
+        }
+
         function drawChart() {
             const canvas = document.getElementById('historyChart');
             if (!canvas) return;
             const ctx = canvas.getContext('2d');
             const rect = canvas.parentElement.getBoundingClientRect();
-            canvas.width = rect.width * 2;
-            canvas.height = rect.height * 2;
-            canvas.style.width = rect.width + 'px';
-            canvas.style.height = rect.height + 'px';
+            canvas.width = rect.width * 2; canvas.height = rect.height * 2;
+            canvas.style.width = rect.width + 'px'; canvas.style.height = rect.height + 'px';
             ctx.scale(2, 2);
-
             const w = rect.width, h = rect.height;
             const pad = { top: 20, right: 10, bottom: 30, left: 35 };
             ctx.clearRect(0, 0, w, h);
-
             const data = [71,74,72,68,65,70,67,63,60,58,55,52,54,50,48,45,42,40,38,35,28,30,32];
-            const chartW = w - pad.left - pad.right;
-            const chartH = h - pad.top - pad.bottom;
-
-            // Zone backgrounds
-            [{y:0,h:20,c:'rgba(22,163,106,0.06)'},{y:20,h:20,c:'rgba(34,197,94,0.05)'},{y:40,h:20,c:'rgba(234,179,8,0.05)'},{y:60,h:20,c:'rgba(249,115,22,0.05)'},{y:80,h:20,c:'rgba(239,68,68,0.06)'}].forEach(z => {
-                const y1 = pad.top + chartH * (1 - (100 - z.y) / 100);
-                ctx.fillStyle = z.c;
-                ctx.fillRect(pad.left, y1, chartW, chartH * (z.h / 100));
-            });
-
-            // Grid
-            [20,40,60,80].forEach(val => {
-                const y = pad.top + chartH * (1 - val / 100);
-                ctx.beginPath(); ctx.strokeStyle = '#e5e7eb'; ctx.lineWidth = 1;
-                ctx.setLineDash([4,4]); ctx.moveTo(pad.left, y); ctx.lineTo(w - pad.right, y); ctx.stroke();
-                ctx.setLineDash([]);
-                ctx.fillStyle = '#9ca3af'; ctx.font = '10px -apple-system, sans-serif';
-                ctx.textAlign = 'right'; ctx.fillText(val.toString(), pad.left - 6, y + 4);
-            });
-
-            // Line
+            const chartW = w - pad.left - pad.right, chartH = h - pad.top - pad.bottom;
+            [{y:0,h:20,c:'rgba(22,163,106,0.06)'},{y:20,h:20,c:'rgba(34,197,94,0.05)'},{y:40,h:20,c:'rgba(234,179,8,0.05)'},{y:60,h:20,c:'rgba(249,115,22,0.05)'},{y:80,h:20,c:'rgba(239,68,68,0.06)'}].forEach(z => { ctx.fillStyle = z.c; ctx.fillRect(pad.left, pad.top + chartH * (1 - (100 - z.y) / 100), chartW, chartH * (z.h / 100)); });
+            [20,40,60,80].forEach(val => { const y = pad.top + chartH * (1 - val / 100); ctx.beginPath(); ctx.strokeStyle = '#e5e7eb'; ctx.lineWidth = 1; ctx.setLineDash([4,4]); ctx.moveTo(pad.left, y); ctx.lineTo(w - pad.right, y); ctx.stroke(); ctx.setLineDash([]); ctx.fillStyle = '#9ca3af'; ctx.font = '10px -apple-system, sans-serif'; ctx.textAlign = 'right'; ctx.fillText(val.toString(), pad.left - 6, y + 4); });
             const step = chartW / (data.length - 1);
-            ctx.beginPath();
-            data.forEach((val, i) => {
-                const x = pad.left + i * step, y = pad.top + chartH * (1 - val / 100);
-                i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
-            });
-            ctx.strokeStyle = '#f97316'; ctx.lineWidth = 2.5; ctx.lineJoin = 'round'; ctx.stroke();
-
-            // Fill
-            const grad = ctx.createLinearGradient(0, pad.top, 0, h - pad.bottom);
-            grad.addColorStop(0, 'rgba(249,115,22,0.18)');
-            grad.addColorStop(1, 'rgba(249,115,22,0)');
-            ctx.lineTo(pad.left + (data.length - 1) * step, h - pad.bottom);
-            ctx.lineTo(pad.left, h - pad.bottom);
-            ctx.closePath(); ctx.fillStyle = grad; ctx.fill();
-
-            // Dot
-            const lastX = pad.left + (data.length - 1) * step;
-            const lastY = pad.top + chartH * (1 - data[data.length - 1] / 100);
-            ctx.beginPath(); ctx.arc(lastX, lastY, 5, 0, Math.PI * 2);
-            ctx.fillStyle = '#ef4444'; ctx.fill();
-            ctx.beginPath(); ctx.arc(lastX, lastY, 8, 0, Math.PI * 2);
-            ctx.strokeStyle = 'rgba(239,68,68,0.25)'; ctx.lineWidth = 2; ctx.stroke();
-
-            // Dates
-            ctx.fillStyle = '#9ca3af'; ctx.font = '10px -apple-system, sans-serif'; ctx.textAlign = 'center';
-            ['Feb 1','Feb 8','Feb 15','Feb 24'].forEach((d, i) => {
-                ctx.fillText(d, pad.left + (i / 3) * chartW, h - 8);
-            });
+            ctx.beginPath(); data.forEach((val, i) => { const x = pad.left + i * step, y = pad.top + chartH * (1 - val / 100); i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y); }); ctx.strokeStyle = '#f97316'; ctx.lineWidth = 2.5; ctx.lineJoin = 'round'; ctx.stroke();
+            const grad = ctx.createLinearGradient(0, pad.top, 0, h - pad.bottom); grad.addColorStop(0, 'rgba(249,115,22,0.18)'); grad.addColorStop(1, 'rgba(249,115,22,0)'); ctx.lineTo(pad.left + (data.length - 1) * step, h - pad.bottom); ctx.lineTo(pad.left, h - pad.bottom); ctx.closePath(); ctx.fillStyle = grad; ctx.fill();
+            const lastX = pad.left + (data.length - 1) * step, lastY = pad.top + chartH * (1 - data[data.length - 1] / 100); ctx.beginPath(); ctx.arc(lastX, lastY, 5, 0, Math.PI * 2); ctx.fillStyle = '#ef4444'; ctx.fill(); ctx.beginPath(); ctx.arc(lastX, lastY, 8, 0, Math.PI * 2); ctx.strokeStyle = 'rgba(239,68,68,0.25)'; ctx.lineWidth = 2; ctx.stroke();
+            ctx.fillStyle = '#9ca3af'; ctx.font = '10px -apple-system, sans-serif'; ctx.textAlign = 'center'; ['1 Sub','8 Sub','15 Sub','24 Sub'].forEach((d, i) => { ctx.fillText(d, pad.left + (i / 3) * chartW, h - 8); });
         }
     </script>
 </body>
